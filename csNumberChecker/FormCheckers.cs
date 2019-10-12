@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace csNumberChecker
@@ -25,12 +18,13 @@ namespace csNumberChecker
         private string BankOk(string anyRekString, bool sepaFlag, bool returnFormatted)
         {
             int rekLength = anyRekString.Length;
-            long dPip = 0;
-            int dPip2 = 0;
-            long calcPip = 0;
+            long dPip;
+            int dPip2;
+            long calcPip;
 
-            bool inputIsSepa = false;
-            string rekOld = "";
+            bool inputIsSepa;
+
+            string rekOld;
             string rekSepa = "";
 
             switch (rekLength)
@@ -69,9 +63,9 @@ namespace csNumberChecker
             }
 
             // first check if rekOld is valid
-            dPip = Int64.Parse(rekOld.Substring(0, 10));
+            dPip = long.Parse(rekOld.Substring(0, 10));
             dPip2 = int.Parse(rekOld.Substring(10, 2));
-            calcPip = dPip - ((dPip / 97) * 97);
+            calcPip = dPip - (dPip / 97 * 97);
 
             if (rekOld.Substring(10, 2) == "00")
             {
@@ -118,12 +112,12 @@ namespace csNumberChecker
                 }
 
                 // dPip = Val(Mid(rekOldString, 11, 2) + Mid(rekOldString, 11, 2) + "111400")
-                dPip = Int64.Parse(rekOld.Substring(10, 2) + rekOld.Substring(10, 2) + "111400");
-                calcPip = dPip - ((dPip / 97) * 97);
+                dPip = long.Parse(rekOld.Substring(10, 2) + rekOld.Substring(10, 2) + "111400");
+                calcPip = dPip - (dPip / 97 * 97);
                 
                 if (!inputIsSepa)
                 {
-                    rekSepa = rekSepa.Remove(2, 2).Insert (2, (98 - calcPip).ToString("00"));
+                    rekSepa = rekSepa.Remove(2, 2).Insert(2, (98 - calcPip).ToString("00"));
                     // s = s.Remove(3, 2).Insert(3, "ZX");
                 }
 
